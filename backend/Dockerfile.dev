@@ -1,0 +1,15 @@
+FROM node:alpine
+
+RUN npm i -g pnpm
+
+WORKDIR '/app'
+
+COPY [ "package.json", "pnpm.lock*", "./" ]
+
+RUN pnpm i
+
+COPY . .
+
+RUN npm i -g @nestjs/cli
+
+CMD ["npm", "run", "start"]
