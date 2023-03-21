@@ -1,6 +1,5 @@
 FROM node:alpine AS base
 
-ENV NODE_ENV=production
 RUN npm i -g pnpm
 
 
@@ -21,7 +20,7 @@ RUN pnpm run build
 RUN pnpm prune --prod
 
 
-FROM base as deploy
+FROM base as prod
 
 WORKDIR '/app'
 COPY --from=build /app/dist ./dist

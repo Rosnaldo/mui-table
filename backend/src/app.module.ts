@@ -1,19 +1,30 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { configSchemaValidation } from './config.schema-validation';
 import { ProductModule } from './Product/product.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'postgres',
-      port: 5432,
-      username: 'user',
-      password: 'password',
-      database: 'db',
-      entities: ['dist/**/*.entity.js'],
-      synchronize: true,
-      autoLoadEntities: true,
+    ConfigModule.forRoot({
+      validationSchema: configSchemaValidation,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          host: configService.get('DB_HOST'),
+          port: configService.get('DB_PORT'),
+          username: configService.get('DB_USERNAME'),
+          password: configService.get('DB_PASSWORD'),
+          database: configService.get('DB_DATABASE'),
+          entities: ['dist/**/*.entity.js'],
+          synchronize: true,
+          autoLoadEntities: true,
+        };
+      },
     }),
     ProductModule,
   ],
