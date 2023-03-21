@@ -1,8 +1,12 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, CacheStore, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { redisStore } from 'cache-manager-redis-store';
+
 import { configSchemaValidation } from './config.schema-validation';
 import { ProductModule } from './Product/product.module';
+
+const ONE_WEEK = 60 * 60 * 24 * 7;
 
 @Module({
   imports: [
@@ -24,6 +28,22 @@ import { ProductModule } from './Product/product.module';
           synchronize: true,
           autoLoadEntities: true,
         };
+      },
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      isGlobal: true,
+      useFactory: async (configService: ConfigService) => {
+        const config = {
+          store: (await redisStore({
+            url: configService.get('REDIS_URL'),
+          })) as unknown as CacheStore,
+          tls: { rejectUnauthorized: false },
+          ttl: ONE_WEEK,
+        };
+
+        return config;
       },
     }),
     ProductModule,

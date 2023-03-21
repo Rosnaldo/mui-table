@@ -28,3 +28,10 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
+
+  redis:
+    container_name: redis
+    image: redis
+    hostname: redis
+    ports:
+      - 6379:6379
