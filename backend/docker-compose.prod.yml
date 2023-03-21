@@ -6,9 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    volumes:
-      - /app/node_modules
-      - ./src:/app/src
     environment:
       PORT: 3000
       DB_HOST: postgres
@@ -25,14 +22,9 @@ services:
     container_name: postgres
     image: postgres
     hostname: postgres
-    volumes:
-      - ./volume-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
-
-volumes:
-  volume-data:

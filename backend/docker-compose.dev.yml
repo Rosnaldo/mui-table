@@ -19,7 +19,7 @@ services:
     image: postgres
     hostname: postgres
     volumes:
-      - ./volume-data:/var/lib/postgresql/data
+      - volume-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
