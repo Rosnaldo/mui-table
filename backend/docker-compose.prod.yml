@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  backend:
+    image: mui-backend
+    container_name: mui-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    volumes:
+      - /app/node_modules
+      - ./src:/app/src
+    environment:
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: user
+      DB_PASSWORD: password
+      DB_DATABASE: db
+    depends_on:
+      - postgres
+    ports:
+      - 3000:3000
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    hostname: postgres
+    volumes:
+      - ./volume-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+
+volumes:
+  volume-data:
