@@ -8,16 +8,16 @@ export class Product {
   @Column({ type: 'text' })
   name: string;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'numeric' })
   calories: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'numeric' })
   fat: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'numeric' })
   carbs: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'numeric' })
   protein: number;
 }
 
