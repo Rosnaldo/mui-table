@@ -3,12 +3,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('product')
 export class Product {
-  // constructor(data?: Partial<Product>) {
-  //   const isNotUndefined = (val: any) => val !== undefined;
-  //   const parsedData = R.pickBy(isNotUndefined, data);
-  //   Object.assign(this, parsedData);
-  // }
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
