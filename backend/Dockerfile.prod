@@ -6,7 +6,7 @@ RUN npm i -g pnpm
 FROM base as dependencies
 
 WORKDIR '/app'
-COPY [ "package.json", "pnpm.lock*", "./" ]
+COPY [ "package.json", "pnpm-lock*", "./" ]
 RUN pnpm i
 
 

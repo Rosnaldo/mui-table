@@ -11,6 +11,8 @@ services:
       - ./src:/app/src
     depends_on:
       - postgres
+      - redis
+      - rabbitmq
     ports:
       - 3000:3000
 
@@ -33,6 +35,20 @@ services:
     hostname: redis
     ports:
       - 6379:6379
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - volume-data:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 15671:15671
 
 volumes:
   volume-data:

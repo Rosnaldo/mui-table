@@ -34,10 +34,15 @@ export default function App() {
     axios.put('http://localhost:3000/product/batch');
   }
 
+  const handleUpdateBatchQueue = () => {
+    axios.put('http://localhost:3000/product/batch-queue');
+  }
+
   return (
     <Box>
       <Button onClick={handlePopulate}>populate</Button>
       <Button onClick={handleUpdateBatch}>update batch (protein 100)</Button>
+      <Button onClick={handleUpdateBatchQueue}>update batch queue (protein 100)</Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

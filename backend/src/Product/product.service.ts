@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { createData } from './create-data';
-import { Product } from './product.entity';
+import { IProduct, Product } from './product.entity';
 
 @Injectable()
 export class ProductService {
@@ -63,5 +63,14 @@ export class ProductService {
         })
         .execute();
     }
+  }
+
+  async updateProduct(product: IProduct): Promise<void> {
+    await this.productRepository
+      .createQueryBuilder('p')
+      .where('id = :id', { id: product.id })
+      .update()
+      .set(product)
+      .execute();
   }
 }
